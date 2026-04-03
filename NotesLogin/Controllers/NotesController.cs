@@ -164,6 +164,13 @@ namespace NotesLogin.Controllers
             {
                 return NotFound();
             }
+
+            // only the user who created the note can edit it
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null || note.NoteUserIdFk != user.Id)
+                return Forbid();
+
             return View(note);
         }
 
@@ -225,14 +232,11 @@ namespace NotesLogin.Controllers
                 return NotFound();
             }
 
+            // only the user who created the note can delete it
             var user = await _userManager.GetUserAsync(User);
 
-            // block access to private notes
-            if (!note.NotePublic && (user == null || note.NoteUserIdFk != user.Id))
-            {
+            if (user == null || note.NoteUserIdFk != user.Id)
                 return Forbid();
-            }
-
 
 
             return View(note);
@@ -248,6 +252,15 @@ namespace NotesLogin.Controllers
             if (note != null)
             {
                 _context.Notes.Remove(note);
+            }
+
+            // block access to private notes
+
+            var user = await _userManager.GetUserAsync(User);
+           
+            if (!note.NotePublic && (user == null || note.NoteUserIdFk != user.Id))
+            {
+                return Forbid();
             }
 
             await _context.SaveChangesAsync();
