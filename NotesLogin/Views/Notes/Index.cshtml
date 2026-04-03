@@ -1,0 +1,89 @@
+﻿@* @model IEnumerable<NotesLogin.Models.Note> *@
+@model IEnumerable<dynamic>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+       @*  <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NoteTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NoteText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NoteDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NotePublic)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NoteUserIdFk)
+            </th>
+            <th></th>
+        </tr> *@
+
+        <tr>
+            <th>Title</th>
+            <th>Text</th>
+            <th>Date</th>
+            <th>Public</th>
+            <th>User</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            @* <td>
+                @Html.DisplayFor(modelItem => item.NoteTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoteText)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoteDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NotePublic)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoteUserIdFk)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.NoteId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.NoteId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.NoteId">Delete</a>
+            </td> *@
+
+                <td>
+                    @item.Note.NoteTitle
+                </td>
+                <td>
+                    @item.Note.NoteText
+                </td>
+                <td>
+                    @item.Note.NoteDate
+                </td>
+                <td>
+                    @item.Note.NotePublic
+                </td>
+                <td>
+                    @item.UserName
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Note.NoteId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Note.NoteId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Note.NoteId">Delete</a>
+                </td>
+        </tr>
+}
+    </tbody>
+</table>
